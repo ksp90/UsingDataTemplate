@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="UsingDataTemplate.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UsingDataTemplate"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <local:SampleViewModel x:Name="ViewModel"/>
+    </Page.DataContext>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="100,10,10,10">
+            <FlipView x:Name="MyFlip" ItemsSource="{Binding Data, Mode=OneWay}" Width="200" Height="200">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <RelativePanel>
+                            <StackPanel RelativePanel.AlignHorizontalCenterWithPanel="True" 
+                                        RelativePanel.AlignTopWithPanel="True">
+                                <TextBlock Text="{Binding Header}"/>
+                                <TextBlock>
+                                    <Run Text="Index "/>
+                                    <Run Text="{Binding ElementName=MyFlip, Path=SelectedIndex, Mode=OneWay}"/>
+                                    <Run Text=" of "/>
+                                    <Run Text="{Binding ElementName=TotalData, Path=Text, Mode=OneWay}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <TextBlock RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True" Text="{Binding Content}"/>
+                        </RelativePanel>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+            <TextBlock x:Name="TotalData" Text="{Binding DataCount}" Visibility="Collapsed"/>
+        </StackPanel>
+    </Grid>
+</Page>
